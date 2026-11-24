@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Team Worklog & Ticket Tracker</title>
+<style>
+:root{--purple:#741D7F;--purple2:#93369d;--light:#f7f3f8;--green:#087f68;--amber:#b7791f;--red:#c53030;--text:#27242a;--muted:#77727a;--border:#e8e1ea;--white:#fff}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,Arial,sans-serif;background:#f6f7f9;color:var(--text)}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.app{display:flex;min-height:100vh}.sidebar{width:245px;background:#241c27;color:#fff;padding:22px 14px;position:fixed;inset:0 auto 0 0}.brand{font-size:20px;font-weight:800;padding:8px 12px 28px}.brand span{color:#dca7e3}.nav button{width:100%;border:0;background:transparent;color:#d8d1da;text-align:left;padding:12px;border-radius:9px;margin:3px 0}.nav button.active,.nav button:hover{background:#4a3150;color:#fff}.main{margin-left:245px;width:calc(100% - 245px);padding:24px 30px}.top{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}.top h1{margin:0;font-size:25px}.sub{color:var(--muted);font-size:13px;margin-top:5px}.btn{border:0;border-radius:8px;padding:10px 15px;font-weight:700}.btn.primary{background:var(--purple);color:#fff}.btn.secondary{background:#eee7f0;color:var(--purple)}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;margin-bottom:20px}.card{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:18px;box-shadow:0 2px 7px #241c2708}.metric{font-size:27px;font-weight:800;margin-top:8px}.label{font-size:12px;color:var(--muted)}.section{background:#fff;border:1px solid var(--border);border-radius:12px;padding:18px;margin-bottom:18px}.section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.section-head h2{font-size:17px;margin:0}.filters{display:flex;gap:9px;flex-wrap:wrap}.filters input,.filters select,.modal input,.modal select,.modal textarea{border:1px solid #ddd4df;border-radius:7px;padding:9px;background:#fff}.filters input{min-width:190px}.table-wrap{overflow:auto}.table{width:100%;border-collapse:collapse;font-size:13px}.table th,.table td{padding:12px 10px;border-bottom:1px solid #eee;text-align:left;vertical-align:top}.table th{font-size:11px;color:#716b73;text-transform:uppercase;background:#faf9fb}.status,.priority,.tag{display:inline-flex;padding:4px 8px;border-radius:99px;font-size:11px;font-weight:700}.status.done{background:#e7f7f1;color:var(--green)}.status.progress{background:#eee8ff;color:#6541a8}.status.blocked{background:#ffeaea;color:var(--red)}.priority.high{background:#fff0ed;color:#c2412d}.priority.medium{background:#fff7df;color:#9a6800}.priority.low{background:#edf5ff;color:#28649c}.ticket{display:flex;gap:12px;align-items:center}.ticket-id{font-weight:800;color:var(--purple)}.click{cursor:pointer}.people{display:flex}.avatar{width:28px;height:28px;border-radius:50%;background:#eadced;color:var(--purple);display:grid;place-items:center;font-size:11px;font-weight:800;border:2px solid #fff;margin-left:-5px}.avatar:first-child{margin-left:0}.empty{text-align:center;padding:35px;color:#888}.view{display:none}.view.active{display:block}.timeline{position:relative;padding-left:25px}.timeline:before{content:"";position:absolute;left:7px;top:4px;bottom:4px;width:2px;background:#e5dce8}.event{position:relative;margin-bottom:20px}.dot{position:absolute;left:-22px;top:4px;width:11px;height:11px;border-radius:50%;background:var(--purple);border:2px solid #fff;box-shadow:0 0 0 2px #e4d6e7}.event-head{display:flex;justify-content:space-between;gap:10px}.event-title{font-weight:700}.event-meta{font-size:12px;color:var(--muted);margin-top:3px}.event-note{margin-top:7px;background:#faf8fb;border-radius:7px;padding:9px;color:#555;font-size:13px}.history-table td:first-child{font-weight:700}.modal-bg{display:none;position:fixed;inset:0;background:#17101899;z-index:20;align-items:center;justify-content:center;padding:20px}.modal-bg.show{display:flex}.modal{background:#fff;border-radius:14px;width:min(850px,100%);max-height:90vh;overflow:auto;padding:22px}.modal-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modal-head h2{margin:0}.x{border:0;background:#eee;border-radius:50%;width:32px;height:32px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;font-weight:700;color:#666}.modal textarea{min-height:90px;resize:vertical}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.mini{font-size:11px;color:#777}.link{color:var(--purple);font-weight:700;cursor:pointer}.toast{position:fixed;right:20px;bottom:20px;background:#29212d;color:#fff;padding:12px 15px;border-radius:8px;display:none;z-index:50}.toast.show{display:block}
+@media(max-width:900px){.sidebar{width:70px}.brand{font-size:0}.brand span{font-size:18px}.nav button{font-size:0;text-align:center}.nav button:before{content:"•";font-size:20px}.main{margin-left:70px;width:calc(100% - 70px);padding:18px}.grid{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.top{align-items:flex-start;gap:10px}.grid{grid-template-columns:1fr 1fr}.top .btn{padding:8px}.section{padding:12px}.table{min-width:800px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside class="sidebar">
+  <div class="brand">Team<span>Flow</span></div>
+  <div class="nav">
+    <button class="active" onclick="showView('dashboard',this)">Dashboard</button>
+    <button onclick="showView('tasks',this)">Daily Tasks</button>
+    <button onclick="showView('tickets',this)">Tickets / Work History</button>
+  </div>
+</aside>
+
+<main class="main">
+  <div id="dashboard" class="view active">
+    <div class="top"><div><h1>Team Work Dashboard</h1><div class="sub">Track daily work and see how the same ticket changes across team members.</div></div><button class="btn primary" onclick="openTask()">+ Add Daily Task</button></div>
+    <div class="grid">
+      <div class="card"><div class="label">Tasks today</div><div class="metric" id="mTasks">0</div></div>
+      <div class="card"><div class="label">Open tickets</div><div class="metric" id="mOpen">0</div></div>
+      <div class="card"><div class="label">Reworked tickets</div><div class="metric" id="mRework">0</div></div>
+      <div class="card"><div class="label">People involved</div><div class="metric" id="mPeople">0</div></div>
+    </div>
+    <div class="section">
+      <div class="section-head"><h2>Recent Work</h2><span class="mini">One ticket can have many work entries</span></div>
+      <div class="table-wrap"><table class="table"><thead><tr><th>Ticket</th><th>Work</th><th>Project</th><th>People</th><th>Changes</th><th>Latest Status</th></tr></thead><tbody id="recent"></tbody></table></div>
+    </div>
+    <div class="section">
+      <div class="section-head"><h2>How the ticket history works</h2></div>
+      <div class="timeline">
+        <div class="event"><span class="dot"></span><div class="event-title">TKT-001 — Slider added</div><div class="event-meta">Poorva • ECD • Day 1</div><div class="event-note">Added image slider to the ECD page.</div></div>
+        <div class="event"><span class="dot"></span><div class="event-title">Same ticket — Text added</div><div class="event-meta">Rahul • ECD • Day 2</div><div class="event-note">Added required text inside the slider. This is the 2nd person on the same work.</div></div>
+        <div class="event"><span class="dot"></span><div class="event-title">Same ticket — Slider fixed</div><div class="event-meta">Neha • ECD • Day 3</div><div class="event-note">Fixed slider after it stopped working. Total contributors: 3.</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tasks" class="view">
+    <div class="top"><div><h1>Daily Tasks</h1><div class="sub">S.No, task, project, status, priority and comments.</div></div><button class="btn primary" onclick="openTask()">+ Add Daily Task</button></div>
+    <div class="section">
+      <div class="filters"><input id="taskSearch" placeholder="Search task/project..." oninput="renderTasks()"><select id="taskStatus" onchange="renderTasks()"><option value="">All status</option><option>To Do</option><option>In Progress</option><option>Done</option><option>Blocked</option></select><select id="taskPriority" onchange="renderTasks()"><option value="">All priority</option><option>High</option><option>Medium</option><option>Low</option></select></div>
+    </div>
+    <div class="section"><div class="table-wrap"><table class="table"><thead><tr><th>S.No</th><th>Task</th><th>Project</th><th>Status</th><th>Priority</th><th>Comment</th><th>Ticket</th><th>Action</th></tr></thead><tbody id="taskBody"></tbody></table></div></div>
+  </div>
+
+  <div id="tickets" class="view">
+    <div class="top"><div><h1>Tickets / Work History</h1><div class="sub">See exactly how many people worked on the same requirement and what each person changed.</div></div><button class="btn primary" onclick="openTicket()">+ Add Work to Ticket</button></div>
+    <div class="section">
+      <div class="filters"><input id="ticketSearch" placeholder="Search ticket, project, person..." oninput="renderTickets()"></div>
+    </div>
+    <div class="section"><div class="table-wrap"><table class="table"><thead><tr><th>Ticket</th><th>Requirement</th><th>Project</th><th>Contributors</th><th>Work entries</th><th>Rework count</th><th>Status</th><th></th></tr></thead><tbody id="ticketBody"></tbody></table></div></div>
+  </div>
+</main>
+</div>
+
+<div class="modal-bg" id="taskModal">
+<div class="modal"><div class="modal-head"><h2>Add Daily Task</h2><button class="x" onclick="closeModal('taskModal')">×</button></div>
+<form onsubmit="saveTask(event)"><div class="form-grid">
+<div class="field"><label>Task</label><input id="fTask" required placeholder="e.g. Added image slider"></div>
+<div class="field"><label>Project</label><input id="fProject" required placeholder="e.g. ECD"></div>
+<div class="field"><label>Status</label><select id="fStatus"><option>To Do</option><option>In Progress</option><option>Done</option><option>Blocked</option></select></div>
+<div class="field"><label>Priority</label><select id="fPriority"><option>High</option><option selected>Medium</option><option>Low</option></select></div>
+<div class="field"><label>Team Member</label><input id="fMember" required placeholder="Your name"></div>
+<div class="field"><label>Ticket ID (optional)</label><input id="fTicket" placeholder="e.g. TKT-001"></div>
+<div class="field full"><label>Comment</label><textarea id="fComment" placeholder="What was done?"></textarea></div>
+</div><div class="modal-actions"><button type="button" class="btn secondary" onclick="closeModal('taskModal')">Cancel</button><button class="btn primary">Save Task</button></div></form></div></div>
+
+<div class="modal-bg" id="ticketModal">
+<div class="modal"><div class="modal-head"><h2>Add Work to Ticket</h2><button class="x" onclick="closeModal('ticketModal')">×</button></div>
+<form onsubmit="saveTicket(event)"><div class="form-grid">
+<div class="field"><label>Ticket ID</label><input id="tId" required placeholder="TKT-001"></div>
+<div class="field"><label>Team Member</label><input id="tMember" required placeholder="Person who did this work"></div>
+<div class="field full"><label>Requirement / Main Work</label><input id="tRequirement" required placeholder="ECD image slider"></div>
+<div class="field"><label>Project</label><input id="tProject" required placeholder="ECD"></div>
+<div class="field"><label>Status after this work</label><select id="tStatus"><option>In Progress</option><option>Done</option><option>Blocked</option></select></div>
+<div class="field"><label>Work type</label><select id="tType"><option>Initial work</option><option>Requirement change</option><option>Fix / Rework</option><option>Enhancement</option></select></div>
+<div class="field full"><label>What did this person do?</label><textarea id="tNote" required placeholder="Example: Added text inside existing slider."></textarea></div>
+</div><div class="modal-actions"><button type="button" class="btn secondary" onclick="closeModal('ticketModal')">Cancel</button><button class="btn primary">Add to Ticket</button></div></form></div></div>
+
+<div class="modal-bg" id="historyModal">
+<div class="modal"><div class="modal-head"><h2 id="historyTitle">Ticket History</h2><button class="x" onclick="closeModal('historyModal')">×</button></div><div id="historyContent"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const seedTickets=[
+{id:"TKT-001",requirement:"ECD image slider",project:"ECD",status:"Done",events:[
+{member:"Poorva",type:"Initial work",note:"Added image slider with images.",date:"Day 1"},
+{member:"Rahul",type:"Requirement change",note:"Added required text inside the existing slider.",date:"Day 2"},
+{member:"Neha",type:"Fix / Rework",note:"Fixed slider after it stopped working.",date:"Day 3"}]},
+{id:"TKT-002",requirement:"National Reserve gallery",project:"CBMS",status:"In Progress",events:[
+{member:"Aman",type:"Initial work",note:"Created gallery layout.",date:"Today"},
+{member:"Poorva",type:"Enhancement",note:"Adjusted responsive image sizing.",date:"Today"}]}
+];
+let tickets=JSON.parse(localStorage.getItem("teamflow_tickets")||"null")||seedTickets;
+let tasks=JSON.parse(localStorage.getItem("teamflow_tasks")||"null")||[
+{task:"Added image slider",project:"ECD",status:"Done",priority:"High",member:"Poorva",ticket:"TKT-001",comment:"Added slider and images."},
+{task:"Added slider text",project:"ECD",status:"Done",priority:"Medium",member:"Rahul",ticket:"TKT-001",comment:"Added required text."},
+{task:"Fixed broken slider",project:"ECD",status:"Done",priority:"High",member:"Neha",ticket:"TKT-001",comment:"Fixed slider issue."}
+];
+
+function persist(){localStorage.setItem("teamflow_tickets",JSON.stringify(tickets));localStorage.setItem("teamflow_tasks",JSON.stringify(tasks))}
+function initials(n){return n.split(" ").map(x=>x[0]).join("").slice(0,2).toUpperCase()}
+function statusClass(s){return s==="Done"?"done":s==="Blocked"?"blocked":"progress"}
+function renderAll(){renderDashboard();renderTasks();renderTickets()}
+function renderDashboard(){
+ document.getElementById("mTasks").textContent=tasks.length;
+ document.getElementById("mOpen").textContent=tickets.filter(t=>t.status!=="Done").length;
+ document.getElementById("mRework").textContent=tickets.reduce((n,t)=>n+t.events.filter(e=>e.type==="Fix / Rework").length,0);
+ const people=new Set(tickets.flatMap(t=>t.events.map(e=>e.member))); document.getElementById("mPeople").textContent=people.size;
+ document.getElementById("recent").innerHTML=tickets.map(t=>{
+ const ppl=[...new Set(t.events.map(e=>e.member))]; return `<tr><td><span class="ticket-id">${t.id}</span></td><td class="click" onclick="openHistory('${t.id}')">${t.requirement}</td><td>${t.project}</td><td><div class="people">${ppl.map(p=>`<span class="avatar" title="${p}">${initials(p)}</span>`).join("")}</div></td><td>${t.events.length} entries</td><td><span class="status ${statusClass(t.status)}">${t.status}</span></td></tr>`}).join("");
+}
+function renderTasks(){
+ const q=document.getElementById("taskSearch").value.toLowerCase(),s=document.getElementById("taskStatus").value,p=document.getElementById("taskPriority").value;
+ const arr=tasks.filter(t=>(!q||(t.task+" "+t.project).toLowerCase().includes(q))&&(!s||t.status===s)&&(!p||t.priority===p));
+ document.getElementById("taskBody").innerHTML=arr.length?arr.map((t,i)=>`<tr><td>${i+1}</td><td><b>${t.task}</b><div class="mini">${t.member}</div></td><td>${t.project}</td><td><span class="status ${statusClass(t.status)}">${t.status}</span></td><td><span class="priority ${t.priority.toLowerCase()}">${t.priority}</span></td><td>${t.comment||"—"}</td><td>${t.ticket?`<span class="link" onclick="openHistory('${t.ticket}')">${t.ticket}</span>`:"—"}</td><td><span class="link" onclick="deleteTask(${tasks.indexOf(t)})">Delete</span></td></tr>`).join(""):`<tr><td colspan="8" class="empty">No tasks found.</td></tr>`;
+}
+function renderTickets(){
+ const q=document.getElementById("ticketSearch").value.toLowerCase();
+ const arr=tickets.filter(t=>(t.id+" "+t.requirement+" "+t.project+" "+t.events.map(e=>e.member).join(" ")).toLowerCase().includes(q));
+ document.getElementById("ticketBody").innerHTML=arr.length?arr.map(t=>{const ppl=[...new Set(t.events.map(e=>e.member))];const rework=t.events.filter(e=>e.type==="Fix / Rework").length;return `<tr><td><b class="ticket-id">${t.id}</b></td><td>${t.requirement}</td><td>${t.project}</td><td>${ppl.length} <span class="mini">(${ppl.join(", ")})</span></td><td>${t.events.length}</td><td>${rework}</td><td><span class="status ${statusClass(t.status)}">${t.status}</span></td><td><span class="link" onclick="openHistory('${t.id}')">View history</span></td></tr>`}).join(""):`<tr><td colspan="8" class="empty">No tickets found.</td></tr>`;
+}
+function showView(id,btn){document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));document.getElementById(id).classList.add("active");document.querySelectorAll(".nav button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");renderAll()}
+function openTask(){document.getElementById("taskModal").classList.add("show")}
+function openTicket(){document.getElementById("ticketModal").classList.add("show")}
+function closeModal(id){document.getElementById(id).classList.remove("show")}
+function saveTask(e){e.preventDefault();const task={task:fTask.value,project:fProject.value,status:fStatus.value,priority:fPriority.value,member:fMember.value,ticket:fTicket.value.trim(),comment:fComment.value};tasks.unshift(task);if(task.ticket){let t=tickets.find(x=>x.id===task.ticket);if(!t){t={id:task.ticket,requirement:task.task,project:task.project,status:task.status,events:[]};tickets.unshift(t)}t.events.push({member:task.member,type:"Initial work",note:task.comment||task.task,date:"Today"});t.status=task.status}persist();e.target.reset();closeModal("taskModal");renderAll();toast("Daily task added")}
+function saveTicket(e){e.preventDefault();let t=tickets.find(x=>x.id===tId.value.trim());if(!t){t={id:tId.value.trim(),requirement:tRequirement.value,project:tProject.value,status:tStatus.value,events:[]};tickets.unshift(t)}t.requirement=tRequirement.value;t.project=tProject.value;t.status=tStatus.value;t.events.push({member:tMember.value,type:tType.value,note:tNote.value,date:"Today"});persist();e.target.reset();closeModal("ticketModal");renderAll();toast("Work added to ticket")}
+function openHistory(id){const t=tickets.find(x=>x.id===id);if(!t)return;historyTitle.textContent=`${t.id} — ${t.requirement}`;historyContent.innerHTML=`<div class="mini" style="margin-bottom:15px">${t.project} · ${new Set(t.events.map(e=>e.member)).size} people · ${t.events.length} work entries · ${t.events.filter(e=>e.type==="Fix / Rework").length} rework</div><div class="timeline">${t.events.map((e,i)=>`<div class="event"><span class="dot"></span><div class="event-head"><div class="event-title">${e.type}</div><div class="mini">${e.date}</div></div><div class="event-meta">${e.member}</div><div class="event-note">${e.note}</div></div>`).join("")}</div>`;document.getElementById("historyModal").classList.add("show")}
+function deleteTask(i){if(confirm("Delete this task?")){tasks.splice(i,1);persist();renderAll();toast("Task deleted")}}
+function toast(s){const x=document.getElementById("toast");x.textContent=s;x.classList.add("show");setTimeout(()=>x.classList.remove("show"),1800)}
+renderAll();
+</script>
+</body>
+</html>
